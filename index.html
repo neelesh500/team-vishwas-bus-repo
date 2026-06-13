@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vrindavan Mathura Bus Service</title>
+    <!-- Google Fonts (Outfit & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <main class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <a href="#" class="nav-btn active" onclick="navigate('home', this)" title="Home"><i class="fa-solid fa-house"></i></a>
+            <a href="#" class="nav-btn" onclick="navigate('routes', this)" title="Routes"><i class="fa-solid fa-route"></i></a>
+            <a href="#" class="nav-btn" onclick="navigate('bookings', this)" title="Tickets"><i class="fa-solid fa-ticket"></i></a>
+            <div class="spacer"></div>
+            <a href="#" class="nav-btn" title="Settings"><i class="fa-solid fa-gear"></i></a>
+        </aside>
+
+        <!-- Main Content Area -->
+        <section class="main-content">
+            <div class="hero-bg"></div>
+            
+            <div class="content-wrapper">
+                <!-- Top Header -->
+                <header class="main-header">
+                    <a href="#" class="logo" onclick="navigate('home')">
+                        <i class="fa-solid fa-gopuram logo-icon"></i>
+                        <div>
+                            VRINDAVAN
+                            <span class="logo-sub">MATHURA BUS SERVICE</span>
+                        </div>
+                    </a>
+                    
+                    <nav class="top-nav">
+                        <a href="#" class="nav-link active" onclick="navigate('home', this)">Home</a>
+                        <a href="#" class="nav-link" onclick="navigate('routes', this)">Routes</a>
+                        <a href="#" class="nav-link" onclick="navigate('services', this)">Bus Services</a>
+                        <a href="#" class="nav-link" onclick="navigate('about', this)">About Us</a>
+                        <a href="#" class="nav-link" onclick="navigate('contact', this)">Contact</a>
+                    </nav>
+                    
+                    <button class="btn-secondary" onclick="navigate('bookings')">
+                        <i class="fa-solid fa-user"></i> My Bookings
+                    </button>
+                </header>
+
+                <!-- PAGE: HOME -->
+                <div id="view-home" class="page-view active">
+                    <div class="hero-section">
+                        <h1 class="hero-title">Travel Local,<br>Travel Divine</h1>
+                        <p class="hero-subtitle">Vrindavan to Mathura and beyond.<br>Safe, Comfortable & Affordable Bus Services.</p>
+                        
+                        <div class="features">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-regular fa-clock"></i></div>
+                                <span>Reliable<br>Service</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-solid fa-tag"></i></div>
+                                <span>Affordable<br>Fares</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-regular fa-calendar"></i></div>
+                                <span>Daily<br>Departures</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-bar">
+                        <div class="search-field">
+                            <label>From</label>
+                            <div class="search-input-wrapper">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <select id="source-stop"></select>
+                            </div>
+                        </div>
+                        <div class="search-field">
+                            <label>To</label>
+                            <div class="search-input-wrapper">
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                                <select id="dest-stop"></select>
+                            </div>
+                        </div>
+                        <div class="search-field">
+                            <label>Date</label>
+                            <div class="search-input-wrapper">
+                                <i class="fa-regular fa-calendar"></i>
+                                <input type="date" id="travel-date" value="2026-06-18">
+                            </div>
+                        </div>
+                        <div class="search-field" style="border-right: none;">
+                            <label>Passengers</label>
+                            <div class="search-input-wrapper">
+                                <select id="passenger-count">
+                                    <option value="1">1 Passenger</option>
+                                    <option value="2">2 Passengers</option>
+                                    <option value="3">3 Passengers</option>
+                                    <option value="4">4 Passengers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="searchBuses(event)">
+                            Search Buses <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <div id="bus-list-results"></div>
+
+                    <div class="bottom-grid">
+                        <div class="card">
+                            <div class="card-title">
+                                Popular Routes
+                            </div>
+                            <div class="route-list">
+                                <div class="route-item">
+                                    <div class="route-name">Vrindavan <i class="fa-solid fa-right-left"></i> Mathura</div>
+                                    <div class="route-price">From ₹30<span>Every 15 mins</span></div>
+                                </div>
+                                <div class="route-item">
+                                    <div class="route-name">Mathura <i class="fa-solid fa-right-left"></i> Vrindavan</div>
+                                    <div class="route-price">From ₹30<span>Every 15 mins</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Why Travel With Us?</div>
+                            <div class="reasons-list">
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Local Expertise</h4>
+                                        <p>Specialized in local routes of Vrindavan & Mathura</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-bus-simple"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Comfortable Journey</h4>
+                                        <p>Clean buses, comfortable seating</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div class="card explore-card">
+                                <div class="explore-bg"></div>
+                                <div class="explore-content">
+                                    <h3>Explore Divine Places</h3>
+                                    <p>Travel to sacred destinations with ease.</p>
+                                    <button class="btn-small" onclick="navigate('explore')">Explore Places</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE: HOME -->
+
+                <!-- PAGE: MY BOOKINGS -->
+                <div id="view-bookings" class="page-view hidden" style="margin-top: 2rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem; margin-bottom: 2rem;">My Booked Tickets</h2>
+                    <div id="my-bookings-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <!-- Injected by app.js -->
+                    </div>
+                </div>
+
+                <!-- PAGE: EXPLORE DIVINE PLACES -->
+                <div id="view-explore" class="page-view hidden" style="margin-top: 1rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Divine Places of Vrindavan</h2>
+                    <p class="hero-subtitle" style="margin-bottom: 1rem;">Experience the spiritual essence of the holy land with our dedicated temple routes.</p>
+                    
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="banke-bihari.png" alt="Banke Bihari Temple">
+                            <div class="gallery-overlay">
+                                <h3>Shree Banke Bihari</h3>
+                                <p>One of the holiest and most famous temples of Lord Krishna in India.</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="radha-vallabh.png" alt="Radha Vallabh Temple">
+                            <div class="gallery-overlay">
+                                <h3>Shree Radha Vallabh</h3>
+                                <p>Renowned for its unique theology emphasizing Radha's supreme position.</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="char-dham.png" alt="Char Dham">
+                            <div class="gallery-overlay">
+                                <h3>Char Dham Replica</h3>
+                                <p>A majestic representation of the four sacred pilgrimage sites.</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="prem-mandir.png" alt="Prem Mandir">
+                            <div class="gallery-overlay">
+                                <h3>Prem Mandir</h3>
+                                <p>A magnificent white marble monument dedicated to Divine Love.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUILT PAGES -->
+                <div id="view-routes" class="page-view hidden" style="margin-top: 2rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem;">Our Core Routes</h2>
+                    <div class="card" style="margin-top: 1.5rem;">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">Vrindavan Parikrama Express</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">A complete circuit covering all major spiritual sites inside Vrindavan.</p>
+                        <div class="route-list">
+                            <div class="route-item"><div><strong>Stops:</strong> Akshaya Patra ➔ ISKCON ➔ Prem Mandir ➔ Banke Bihari ➔ Railway Station</div><div class="route-price">Frequency: Every 15 mins</div></div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 1.5rem;">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">Mathura Connect</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Seamless transport linking the twin holy cities for pilgrims.</p>
+                        <div class="route-list">
+                            <div class="route-item"><div><strong>Stops:</strong> Prem Mandir ➔ ISKCON ➔ Railway Station ➔ Mathura Junction</div><div class="route-price">Frequency: Every 30 mins</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-services" class="page-view hidden" style="margin-top: 2rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Bus Services & Amenities</h2>
+                    <div class="gallery-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="card" style="text-align: center;"><i class="fa-solid fa-snowflake" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i><h3>AC Seating</h3><p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Fully air-conditioned luxury buses.</p></div>
+                        <div class="card" style="text-align: center;"><i class="fa-solid fa-music" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i><h3>Devotional Music</h3><p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Immersive spiritual chants onboard.</p></div>
+                        <div class="card" style="text-align: center;"><i class="fa-solid fa-wheelchair" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i><h3>Accessible</h3><p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Wheelchair friendly boarding ramps.</p></div>
+                    </div>
+                </div>
+
+                <div id="view-about" class="page-view hidden" style="margin-top: 2rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">About Us</h2>
+                    <div class="card" style="display: flex; gap: 2rem; align-items: center; max-width: 900px;">
+                        <div style="flex: 1;">
+                            <img src="radha-krishna.png" alt="Radha Krishna" style="width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow);">
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.8rem;">Travel Local, Travel Divine</h3>
+                            <p style="line-height: 1.6; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem;">Vrindavan Mathura Bus Service was founded with a single mission: to provide comfortable, safe, and affordable transportation for the millions of pilgrims who visit the holy lands of Braj each year.</p>
+                            <p style="line-height: 1.6; color: var(--text-muted); font-size: 1.1rem;">Our fleet connects all major temples and junctions, ensuring your spiritual journey is hassle-free. Guided by devotion and service, we strive to make every journey as beautiful as the destination.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-contact" class="page-view hidden" style="margin-top: 2rem;">
+                    <h2 class="hero-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Contact Support</h2>
+                    <div class="card" style="max-width: 600px;">
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Radhe Shyam">
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="radhe@example.com">
+                        </div>
+                        <div class="input-group">
+                            <label>Message</label>
+                            <input type="text" placeholder="How can we help?">
+                        </div>
+                        <button class="btn-primary" style="margin-top: 1rem; width: 100%; justify-content: center;" onclick="alert('Message Sent!')">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Notifications Container for errors/success messages -->
+        <div class="notifications-container" id="notifications-box"></div>
+    </main>
+
+    <!-- Ticket Booking Modal -->
+    <div class="modal-backdrop" id="booking-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Confirm Ticket Booking</h2>
+                <button class="close-btn" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="booking-modal-body">
+                <!-- Details injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
