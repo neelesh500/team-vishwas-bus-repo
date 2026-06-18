@@ -1,0 +1,7 @@
+[
+    { "id": 1, "from": "Vrindavan", "to": "Mathura", "price": 30, "frequency": "Every 15 mins" },
+    { "id": 2, "from": "Mathura", "to": "Goverdhan", "price": 45, "frequency": "Every 30 mins" },
+    { "id": 3, "from": "Vrindavan", "to": "Prem Mandir", "price": 50, "frequency": "Several times a day" },
+    { "id": 4, "from": "Vrindavan", "to": "ISKCON", "price": 20, "frequency": "Hourly" },
+    { "id": 5, "from": "Mathura", "to": "Banke Bihari", "price": 40, "frequency": "Every 30 mins" }
+]

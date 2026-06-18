@@ -6,6 +6,8 @@ const API_URL = 'http://localhost:3000/api';
 document.addEventListener("DOMContentLoaded", async () => {
     await fetchInitialData();
     populateSelects();
+    renderRoutesPage();
+    renderServicesPage();
     renderMyBookings();
 });
 
@@ -48,35 +50,155 @@ function populateSelects() {
 // ==========================================
 // SPA ROUTING
 // ==========================================
+const NAV_VIEW_MAP = {
+    home: 'Home',
+    routes: 'Routes',
+    services: 'Bus Services',
+    about: 'About Us',
+    contact: 'Contact'
+};
+
+function syncNavigationState(viewId, element = null) {
+    document.querySelectorAll('.nav-link').forEach(nav => {
+        nav.classList.remove('active');
+        if (NAV_VIEW_MAP[viewId] && nav.textContent.trim() === NAV_VIEW_MAP[viewId]) {
+            nav.classList.add('active');
+        }
+    });
+
+    document.querySelectorAll('.sidebar .nav-btn').forEach(btn => btn.classList.remove('active'));
+
+    if (element && element.classList.contains('nav-btn')) {
+        element.classList.add('active');
+    } else if (viewId === 'home') {
+        document.querySelector('.sidebar .nav-btn[title="Home"]')?.classList.add('active');
+    } else if (viewId === 'routes') {
+        document.querySelector('.sidebar .nav-btn[title="Routes"]')?.classList.add('active');
+    } else if (viewId === 'bookings') {
+        document.querySelector('.sidebar .nav-btn[title="Tickets"]')?.classList.add('active');
+    }
+
+    if (element && element.classList.contains('nav-link')) {
+        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+        element.classList.add('active');
+    }
+}
+
 window.navigate = function(viewId, element = null) {
-    // Hide all views
     document.querySelectorAll('.page-view').forEach(view => {
         view.classList.add('hidden');
         view.classList.remove('active');
     });
 
-    // Show target view
     const target = document.getElementById(`view-${viewId}`);
     if (target) {
         target.classList.remove('hidden');
         target.classList.add('active');
     }
 
-    // Update active state on nav links
-    if (element) {
-        if (element.classList.contains('nav-link')) {
-            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-            element.classList.add('active');
-        } else if (element.classList.contains('nav-btn')) {
-            document.querySelectorAll('.nav-btn').forEach(nav => nav.classList.remove('active'));
-            element.classList.add('active');
-        }
-    }
-    
-    // Refresh bookings if going to bookings page
-    if (viewId === 'bookings') {
+    syncNavigationState(viewId, element);
+
+    if (viewId === 'routes') {
+        renderRoutesPage();
+    } else if (viewId === 'services') {
+        renderServicesPage();
+    } else if (viewId === 'bookings') {
         renderMyBookings();
     }
+};
+
+// ==========================================
+// PAGE RENDERERS
+// ==========================================
+function getStopName(stopId) {
+    return STOPS.find(s => s.id === stopId)?.name || 'Unknown';
+}
+
+function getRouteDescription(routeId) {
+    if (routeId === 1) {
+        return 'A complete circuit covering all major spiritual sites inside Vrindavan.';
+    }
+    if (routeId === 2) {
+        return 'Seamless transport linking the twin holy cities for pilgrims.';
+    }
+    return 'Connecting key stops across the Braj region.';
+}
+
+function getRouteFrequency(routeId) {
+    return routeId === 1 ? 'Every 15 mins' : 'Every 30 mins';
+}
+
+function renderRoutesPage() {
+    const container = document.getElementById('routes-page-container');
+    if (!container) return;
+
+    if (ROUTES.length === 0) {
+        container.innerHTML = `<div class="card" style="margin-top: 1.5rem; text-align: center; color: var(--text-muted); padding: 2rem;">Route information is currently unavailable.</div>`;
+        return;
+    }
+
+    container.innerHTML = ROUTES.map(route => {
+        const stopNames = route.stops.map(getStopName).join(' ➔ ');
+        const activeBuses = BUSES.filter(bus => bus.route_id === route.id && bus.status === 'Active').length;
+
+        return `
+            <div class="card" style="margin-top: 1.5rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">${route.name}</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">${getRouteDescription(route.id)}</p>
+                <div class="route-list">
+                    <div class="route-item">
+                        <div><strong>Stops:</strong> ${stopNames}</div>
+                        <div class="route-price">Frequency: ${getRouteFrequency(route.id)}<span>₹${route.fare_per_stop} per stop • ${activeBuses} active bus(es)</span></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderServicesPage() {
+    const container = document.getElementById('services-fleet-container');
+    if (!container) return;
+
+    const activeBuses = BUSES.filter(bus => bus.status === 'Active');
+
+    if (activeBuses.length === 0) {
+        container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 1rem;">No active buses available at the moment.</p>`;
+        return;
+    }
+
+    container.innerHTML = activeBuses.map(bus => {
+        const route = ROUTES.find(r => r.id === bus.route_id);
+        const availableSeats = bus.capacity - bus.booked_seats;
+
+        return `
+            <div class="bus-card" style="margin-bottom: 0.75rem;">
+                <div class="bus-card-info">
+                    <h4>${bus.name}</h4>
+                    <p>${bus.number} • ${route ? route.name : 'Assigned Route'} • ${availableSeats} seats available</p>
+                </div>
+                <button class="btn-primary" style="padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem;" onclick="navigate('home')">
+                    Book Now
+                </button>
+            </div>
+        `;
+    }).join('');
+}
+
+window.submitContactForm = function() {
+    const name = document.getElementById('contact-name')?.value.trim();
+    const email = document.getElementById('contact-email')?.value.trim();
+    const message = document.getElementById('contact-message')?.value.trim();
+
+    if (!name || !email || !message) {
+        addNotification('Missing Details', 'Please fill in all contact form fields.', 'danger');
+        return;
+    }
+
+    addNotification('Message Sent', 'Thank you for reaching out. Our team will respond shortly.', 'success');
+    document.getElementById('contact-name').value = '';
+    document.getElementById('contact-email').value = '';
+    document.getElementById('contact-message').value = '';
 };
 
 // ==========================================
@@ -280,7 +402,16 @@ async function renderMyBookings() {
         const tickets = await res.json();
         
         if (tickets.length === 0) {
-            container.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 3rem; color: var(--text-muted);">You have no active bookings in the database.</div>`;
+            container.innerHTML = `
+                <div class="card" style="grid-column: span 2; text-align: center; padding: 3rem;">
+                    <i class="fa-solid fa-ticket" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem; color: var(--primary);">No Bookings Yet</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You have no active bookings. Search for a bus and book your first ticket.</p>
+                    <button class="btn-primary" style="margin: 0 auto;" onclick="navigate('home')">
+                        Search Buses <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            `;
             return;
         }
         

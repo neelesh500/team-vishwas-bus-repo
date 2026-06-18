@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Contact — Vrindavan Mathura Bus Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="app-container">
+        <aside class="sidebar">
+            <a href="index.html" class="nav-btn" title="Home"><i class="fa-solid fa-house"></i></a>
+            <a href="routes.html" class="nav-btn" title="Routes"><i class="fa-solid fa-route"></i></a>
+            <a href="index.html#view-bookings" class="nav-btn" title="Tickets"><i class="fa-solid fa-ticket"></i></a>
+            <div class="spacer"></div>
+            <a href="#" class="nav-btn" title="Settings"><i class="fa-solid fa-gear"></i></a>
+        </aside>
+
+        <section class="main-content">
+            <div class="hero-bg"></div>
+            <div class="content-wrapper">
+                <header class="main-header">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-gopuram logo-icon"></i>
+                        <div>VRINDAVAN <span class="logo-sub">MATHURA BUS SERVICE</span></div>
+                    </a>
+
+                    <nav class="top-nav">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="routes.html" class="nav-link">Routes</a>
+                        <a href="services.html" class="nav-link">Bus Services</a>
+                        <a href="about.html" class="nav-link">About Us</a>
+                        <a href="contact.html" class="nav-link active">Contact</a>
+                    </nav>
+
+                    <button class="btn-secondary" onclick="location.href='index.html'">
+                        <i class="fa-solid fa-user"></i> My Bookings
+                    </button>
+                </header>
+
+                <div style="margin-top:2rem;">
+                    <h2 class="hero-title" style="font-size:2.5rem;">Contact Support</h2>
+                    <p class="hero-subtitle">We're here to help with bookings, routes, and travel queries.</p>
+
+                    <div class="bottom-grid" style="margin-top:1.5rem; grid-template-columns:1fr 1.2fr;">
+                        <div class="card">
+                            <div class="card-title">Reach Us</div>
+                            <div class="reasons-list">
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-phone"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Phone</h4>
+                                        <p>+91 8679105749</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-envelope"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Email</h4>
+                                        <p>last.pq13@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-location-dot"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Office</h4>
+                                        <p>Vrindavan Bus Stand, Station Road, Vrindavan, UP</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-regular fa-clock"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Hours</h4>
+                                        <p>Mon – Sun: 5:00 AM – 10:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Send a Message</div>
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" id="contact-name" placeholder="Radhe Shyam">
+                            </div>
+                            <div class="input-group">
+                                <label>Email</label>
+                                <input type="email" id="contact-email" placeholder="radhe@example.com">
+                            </div>
+                            <div class="input-group">
+                                <label>Message</label>
+                                <input type="text" id="contact-message" placeholder="How can we help?">
+                            </div>
+                            <button class="btn-primary" style="margin-top:1rem; width:100%; justify-content:center;" onclick="submitContactForm()">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="notifications-container" id="notifications-box"></div>
+    </main>
+
+    <script>
+        function submitContactForm() {
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            if (!name || !email || !message) {
+                alert('Please fill all fields');
+                return;
+            }
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message
+                })
+            }).then(r => r.json()).then(res => {
+                if (res && res.success) {
+                    alert('Message sent — thank you!');
+                    document.getElementById('contact-name').value = '';
+                    document.getElementById('contact-email').value = '';
+                    document.getElementById('contact-message').value = '';
+                } else {
+                    alert('Unable to send message. Try again.');
+                }
+            }).catch(err => {
+                console.error(err);
+                alert('Network error. Make sure server is running (http://localhost:3000).');
+            });
+        }
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
