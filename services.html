@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bus Services — Vrindavan Mathura Bus Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="app-container">
+        <aside class="sidebar">
+            <a href="index.html" class="nav-btn" title="Home"><i class="fa-solid fa-house"></i></a>
+            <a href="routes.html" class="nav-btn" title="Routes"><i class="fa-solid fa-route"></i></a>
+            <a href="index.html#view-bookings" class="nav-btn" title="Tickets"><i class="fa-solid fa-ticket"></i></a>
+            <div class="spacer"></div>
+            <a href="#" class="nav-btn" title="Settings"><i class="fa-solid fa-gear"></i></a>
+        </aside>
+
+        <section class="main-content">
+            <div class="hero-bg"></div>
+            <div class="content-wrapper">
+                <header class="main-header">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-gopuram logo-icon"></i>
+                        <div>VRINDAVAN <span class="logo-sub">MATHURA BUS SERVICE</span></div>
+                    </a>
+
+                    <nav class="top-nav">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="routes.html" class="nav-link">Routes</a>
+                        <a href="services.html" class="nav-link active">Bus Services</a>
+                        <a href="about.html" class="nav-link">About Us</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </nav>
+
+                    <button class="btn-secondary" onclick="location.href='index.html'">
+            <i class="fa-solid fa-user"></i> My Bookings
+          </button>
+                </header>
+
+                <div style="margin-top:2rem;">
+                    <h2 class="hero-title" style="font-size:2.5rem;">Bus Services & Amenities</h2>
+                    <p class="hero-subtitle">Safe, comfortable, and affordable bus services for pilgrims and local travelers.</p>
+
+                    <div class="bottom-grid" style="margin-top:1.5rem;">
+                        <div class="card" style="text-align:center;">
+                            <i class="fa-solid fa-snowflake" style="font-size:2rem; color:var(--primary); margin-bottom:1rem;"></i>
+                            <h3>AC Seating</h3>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Fully air-conditioned luxury buses.</p>
+                        </div>
+                        <div class="card" style="text-align:center;">
+                            <i class="fa-solid fa-music" style="font-size:2rem; color:var(--primary); margin-bottom:1rem;"></i>
+                            <h3>Devotional Music</h3>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Immersive spiritual chants onboard.</p>
+                        </div>
+                        <div class="card" style="text-align:center;">
+                            <i class="fa-solid fa-wheelchair" style="font-size:2rem; color:var(--primary); margin-bottom:1rem;"></i>
+                            <h3>Accessible</h3>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Wheelchair friendly boarding ramps.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top:1.5rem;">
+                        <div class="card-title">Our Active Fleet</div>
+                        <div id="services-fleet-container" style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+                            <div class="fleet-item card" style="width:220px; text-align:center;">
+                                <img src="bus-sample.png" alt="Bus" style="width:100%; border-radius:8px;">
+                                <h4 style="margin-top:0.5rem;">Volvo AC</h4>
+                                <p style="font-size:0.85rem; color:var(--text-muted);">Comfort & safety</p>
+                            </div>
+                            <div class="fleet-item card" style="width:220px; text-align:center;">
+                                <img src="bus-sample.png" alt="Bus" style="width:100%; border-radius:8px;">
+                                <h4 style="margin-top:0.5rem;">Mini Bus</h4>
+                                <p style="font-size:0.85rem; color:var(--text-muted);">Frequent shuttles</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <div class="notifications-container" id="notifications-box"></div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

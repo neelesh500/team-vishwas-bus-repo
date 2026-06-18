@@ -54,14 +54,20 @@ CREATE TABLE buses (
 ALTER TABLE drivers ADD CONSTRAINT fk_driver_bus FOREIGN KEY (assigned_bus_id) REFERENCES buses(bus_id) ON DELETE SET NULL;
 
 -- 4. Routes Table
-CREATE TABLE routes (
-    route_id SERIAL PRIMARY KEY,
-    route_name VARCHAR(100) NOT NULL,
-    start_stop VARCHAR(100) NOT NULL,
-    end_stop VARCHAR(100) NOT NULL,
-    distance_km DECIMAL(6, 2) NOT NULL CHECK (distance_km > 0),
-    estimated_duration INTERVAL NOT NULL
+CREATE TABLE IF NOT EXISTS routes (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  "from" TEXT NOT NULL,
+  "to" TEXT NOT NULL,
+  price INTEGER,
+  frequency TEXT
 );
+
+DELETE FROM routes; -- optional: clear existing
+INSERT INTO routes ("from","to",price,frequency) VALUES ('Vrindavan','Mathura',30,'Every 15 mins');
+INSERT INTO routes ("from","to",price,frequency) VALUES ('Mathura','Goverdhan',45,'Every 30 mins');
+INSERT INTO routes ("from","to",price,frequency) VALUES ('Vrindavan','Prem Mandir',50,'Several times a day');
+INSERT INTO routes ("from","to",price,frequency) VALUES ('Vrindavan','ISKCON',20,'Hourly');
+INSERT INTO routes ("from","to",price,frequency) VALUES ('Mathura','Banke Bihari',40,'Every 30 mins');
 
 -- 5. Bus Stops Table
 CREATE TABLE bus_stops (

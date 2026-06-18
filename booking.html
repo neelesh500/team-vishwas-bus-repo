@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Book Ticket — Vrindavan Mathura Bus Service</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles (self-contained to preserve site theme) -->
+    <style>
+         :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --glass: rgba(255, 255, 255, 0.6);
+            --accent: #ff6a00;
+            /* orange */
+            --accent-2: #0373d9;
+            /* blue */
+            --muted: #6b7280;
+            --radius: 12px;
+            --shadow: 0 8px 30px rgba(3, 19, 45, 0.06);
+            font-family: "Inter", "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+            color: #0b1220;
+        }
+        
+        .app {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        /* Left panel: Form */
+        
+        .panel {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.55));
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            border: 1px solid rgba(15, 23, 42, 0.03);
+        }
+        
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .brand .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            font-size: 22px;
+            box-shadow: 0 6px 18px rgba(3, 19, 45, 0.12);
+        }
+        
+        .brand h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .brand p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        .illustration {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+            border: 1px solid rgba(10, 20, 40, 0.03);
+        }
+        
+        .illustration img {
+            max-height: 110px;
+            width: auto;
+            opacity: 0.98;
+        }
+        
+        form .row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .field {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea,
+        input[type="number"] {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(10, 20, 40, 0.06);
+            background: var(--card);
+            outline: none;
+            font-size: 14px;
+            transition: box-shadow .18s, transform .12s;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            box-shadow: 0 6px 18px rgba(3, 115, 217, 0.08);
+            transform: translateY(-1px);
+            border-color: rgba(3, 115, 217, 0.28);
+        }
+        
+        .required {
+            color: var(--accent);
+            margin-left: 6px;
+            font-weight: 700;
+        }
+        
+        .inline {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .muted {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+        
+        .gender,
+        .pass-type {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .gender button,
+        .pass-type button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(10, 20, 40, 0.05);
+            background: transparent;
+            cursor: pointer;
+            transition: all .12s;
+            font-weight: 600;
+            color: #0b1220;
+        }
+        
+        .gender button.active,
+        .pass-type button.active {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(3, 19, 45, 0.08);
+        }
+        
+        textarea {
+            min-height: 82px;
+            resize: vertical;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .btn {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: #fff;
+            box-shadow: 0 10px 28px rgba(3, 19, 45, 0.08);
+            transform: translateY(0);
+            transition: transform .12s, box-shadow .12s;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(10, 20, 40, 0.06);
+            color: var(--accent-2);
+        }
+        
+        .note {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+        /* Right panel: search results & summary */
+        
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .results .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+        }
+        
+        .bus-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 20, 40, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform .12s, box-shadow .12s;
+        }
+        
+        .bus-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 48px rgba(3, 19, 45, 0.08);
+        }
+        
+        .bus-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .bus-info {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .bus-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .bus-meta {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        
+        .bus-sub {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 3px;
+        }
+        
+        .bus-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            padding: 6px 8px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            color: #fff;
+        }
+        
+        .badge.live {
+            background: linear-gradient(90deg, #16a34a, #059669);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.08);
+        }
+        
+        .badge.upcoming {
+            background: linear-gradient(90deg, #06b6d4, #0373d9);
+        }
+        
+        .fare {
+            font-weight: 800;
+            color: var(--accent-2);
+            font-size: 16px;
+        }
+        
+        .bus-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .tiny {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        /* Summary box */
+        
+        .summary {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid rgba(10, 20, 40, 0.03);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 24px;
+        }
+        
+        .summary .line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .summary .muted {
+            font-weight: 400;
+            color: var(--muted);
+        }
+        /* loading skeleton */
+        
+        .loader {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+        }
+        
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 3px solid rgba(3, 19, 45, 0.08);
+            border-top-color: var(--accent-2);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        /* responsive */
+        
+        @media (max-width:980px) {
+            .app {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            .summary {
+                position: relative;
+                top: unset;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app" role="main">
+
+        <!-- LEFT: Booking Form -->
+        <div class="panel" aria-labelledby="formTitle">
+            <div class="brand">
+                <div class="logo"><i class="fa-solid fa-bus"></i></div>
+                <div>
+                    <h1 id="formTitle">Vrindavan Mathura Bus Service</h1>
+                    <p>Local & pilgrimage shuttle — fast, safe and devotional</p>
+                </div>
+            </div>
+
+            <div class="illustration" aria-hidden="true">
+                <!-- please replace with a local asset if desired -->
+                <img src="assets/bus-illustration.png" alt="Bus illustration" onerror="this.style.display='none'">
+            </div>
+
+            <form id="searchForm" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="field">
+                        <label>Passenger Full Name <span class="required" aria-hidden="true">*</span></label>
+                        <input id="fullName" type="text" placeholder="e.g. Kartik Sharma" />
+                        <small class="muted" id="err-name"></small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Mobile Number <span class="required">*</span></label>
+                        <input id="mobile" type="tel" inputmode="numeric" placeholder="e.g. 9876543210" required />
+                        <small class="muted" id="err-mobile"></small>
+                    </div>
+                    <div class="field">
+                        <label>Email Address</label>
+                        <input id="email" type="email" placeholder="optional — abc@example.com" />
+                        <small class="muted" id="err-email"></small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Gender</label>
+                        <div class="gender" role="radiogroup" aria-label="Gender">
+                            <button type="button" class="gender-btn active" data-value="Male">Male</button>
+                            <button type="button" class="gender-btn" data-value="Female">Female</button>
+                            <button type="button" class="gender-btn" data-value="Other">Other</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Passenger Type</label>
+                        <div class="pass-type" role="radiogroup" aria-label="Passenger type">
+                            <button type="button" class="pass-btn active" data-value="Adult">Adult</button>
+                            <button type="button" class="pass-btn" data-value="Child">Child</button>
+                            <button type="button" class="pass-btn" data-value="Senior">Senior</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Pickup Location <span class="required">*</span></label>
+                        <select id="pickup" required>
+              <option value="">Select pickup</option>
+            </select>
+                        <small class="muted" id="err-pickup"></small>
+                    </div>
+                    <div class="field">
+                        <label>Destination Location <span class="required">*</span></label>
+                        <select id="destination" required>
+              <option value="">Select destination</option>
+            </select>
+                        <small class="muted" id="err-dest"></small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Travel Date <span class="required">*</span></label>
+                        <input id="date" type="date" required />
+                        <small class="muted" id="err-date"></small>
+                    </div>
+                    <div class="field">
+                        <label>Number of Seats <span class="required">*</span></label>
+                        <input id="seats" type="number" min="1" max="10" value="1" required />
+                        <small class="muted" id="err-seats"></small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field" style="flex:1 1 100%">
+                        <label>Special Instructions / Notes</label>
+                        <textarea id="notes" placeholder="e.g. Need wheelchair assistance, prefer front seats"></textarea>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="searchBtn" type="submit" class="btn btn-primary">
+            <span id="searchText">Search Buses</span>
+            <span id="searchLoader" style="display:none" class="loader"><span class="spinner"></span>Searching</span>
+          </button>
+                    <button id="resetBtn" type="button" class="btn btn-ghost">Reset</button>
+                    <div style="flex:1"></div>
+                </div>
+
+                <div class="note">Tip: Open this page from the site host (http://localhost:3000) so live search connects to the server.</div>
+            </form>
+        </div>
+
+        <!-- RIGHT: Results + Summary -->
+        <div class="results">
+            <div class="header">
+                <div>
+                    <h2 style="margin:0;font-size:18px">Available Buses</h2>
+                    <div class="muted" id="results-sub">Search and choose a bus to continue</div>
+                </div>
+                <div id="results-actions" style="display:flex; gap:8px; align-items:center;">
+                    <div id="results-loading" style="display:none" class="loader">
+                        <div class="spinner"></div> Loading</div>
+                </div>
+            </div>
+
+            <div id="results-grid" class="results-grid">
+                <!-- bus cards injected here -->
+            </div>
+
+            <div class="summary" id="bookingSummary" aria-live="polite">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <div style="font-weight:800">Booking Summary</div>
+                    <div class="tiny muted">Auto updates as you select</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Passenger</div>
+                    <div id="sum-name">—</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Route</div>
+                    <div id="sum-route">—</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Selected Bus</div>
+                    <div id="sum-bus">—</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Seats</div>
+                    <div id="sum-seats">0</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Fare / Seat</div>
+                    <div id="sum-fare">—</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Subtotal</div>
+                    <div id="sum-sub">—</div>
+                </div>
+                <div class="line">
+                    <div class="muted">Booking Charges</div>
+                    <div id="sum-charges">₹15</div>
+                </div>
+                <hr style="border:none;border-top:1px solid rgba(0,0,0,0.06); margin:10px 0;">
+                <div class="line" style="font-size:18px;">
+                    <div>Total</div>
+                    <div id="sum-total">—</div>
+                </div>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                    <button id="confirmBtn" class="btn btn-primary" disabled><i class="fa-solid fa-check"></i> Confirm Booking</button>
+                    <button id="clearSelection" class="btn btn-ghost">Clear</button>
+                </div>
+                <div id="summaryMsg" class="muted" style="margin-top:8px;"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Booking modal (confirmation) -->
+    <div id="modal" role="dialog" aria-hidden="true" style="display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; background:rgba(2,6,23,0.45);">
+        <div style="background:#fff; border-radius:12px; padding:18px; width:420px; box-shadow:0 20px 60px rgba(2,6,23,0.25);">
+            <h3 style="margin-top:0">Confirm Booking</h3>
+            <div id="modalBody" style="margin:12px 0"></div>
+            <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
+                <button id="modalCancel" class="btn btn-ghost">Cancel</button>
+                <button id="modalConfirm" class="btn btn-primary">Confirm & Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        // Utilities
+        const $ = sel => document.querySelector(sel);
+        const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+        // Form elements
+        const fullName = $('#fullName');
+        const mobile = $('#mobile');
+        const email = $('#email');
+        const genderBtns = $$('.gender-btn');
+        const passBtns = $$('.pass-btn');
+        const pickup = $('#pickup');
+        const destination = $('#destination');
+        const dateInput = $('#date');
+        const seatsInput = $('#seats');
+        const notes = $('#notes');
+        const searchForm = $('#searchForm');
+        const searchBtn = $('#searchBtn');
+        const searchText = $('#searchText');
+        const searchLoader = $('#searchLoader');
+
+        const resultsGrid = $('#results-grid');
+        const resultsSub = $('#results-sub');
+        const resultsLoading = $('#results-loading');
+
+        const sumName = $('#sum-name');
+        const sumRoute = $('#sum-route');
+        const sumBus = $('#sum-bus');
+        const sumSeats = $('#sum-seats');
+        const sumFare = $('#sum-fare');
+        const sumSub = $('#sum-sub');
+        const sumCharges = $('#sum-charges');
+        const sumTotal = $('#sum-total');
+        const confirmBtn = $('#confirmBtn');
+        const clearSelection = $('#clearSelection');
+        const bookingSummaryMsg = $('#summaryMsg');
+
+        const modal = $('#modal');
+        const modalBody = $('#modalBody');
+        const modalCancel = $('#modalCancel');
+        const modalConfirm = $('#modalConfirm');
+
+        let selectedBus = null;
+        let searchState = {
+            loading: false,
+            buses: []
+        };
+
+        // default booking fee
+        const BOOKING_FEE = 15;
+
+        // Init: populate routes into pickup/destination selects
+        function loadRoutesToSelects() {
+            fetch('/api/routes').then(r => r.json()).then(routes => {
+                // use unique stops for pickup/destination
+                const stops = new Set();
+                routes.forEach(rt => {
+                    stops.add(rt.from);
+                    stops.add(rt.to);
+                });
+                const sorted = Array.from(stops).sort();
+                sorted.forEach(s => {
+                    const o1 = document.createElement('option');
+                    o1.value = s;
+                    o1.textContent = s;
+                    const o2 = document.createElement('option');
+                    o2.value = s;
+                    o2.textContent = s;
+                    pickup.appendChild(o1);
+                    destination.appendChild(o2);
+                });
+            }).catch(() => {
+                // fallback if server not available - common stops
+                ['Vrindavan', 'Mathura', 'Goverdhan', 'Prem Mandir', 'ISKCON', 'Banke Bihari'].forEach(s => {
+                    const o1 = document.createElement('option');
+                    o1.value = s;
+                    o1.textContent = s;
+                    const o2 = document.createElement('option');
+                    o2.value = s;
+                    o2.textContent = s;
+                    pickup.appendChild(o1);
+                    destination.appendChild(o2);
+                });
+            });
+        }
+
+        // Radio-like buttons
+        genderBtns.forEach(b => b.addEventListener('click', () => {
+            genderBtns.forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+        }));
+        passBtns.forEach(b => b.addEventListener('click', () => {
+            passBtns.forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+        }));
+
+        // Basic validators
+        function validateForm() {
+            let ok = true;
+            // name optional but recommended
+            $('#err-name').textContent = '';
+            if (mobile.value.trim().length < 10) {
+                $('#err-mobile').textContent = 'Enter a valid mobile number';
+                ok = false;
+            } else $('#err-mobile').textContent = '';
+            if (!pickup.value) {
+                $('#err-pickup').textContent = 'Select pickup';
+                ok = false;
+            } else $('#err-pickup').textContent = '';
+            if (!destination.value) {
+                $('#err-dest').textContent = 'Select destination';
+                ok = false;
+            } else $('#err-dest').textContent = '';
+            if (!dateInput.value) {
+                $('#err-date').textContent = 'Select travel date';
+                ok = false;
+            } else $('#err-date').textContent = '';
+            const seatsVal = parseInt(seatsInput.value, 10) || 0;
+            if (seatsVal <= 0) {
+                $('#err-seats').textContent = 'Enter seats (min 1)';
+                ok = false;
+            } else $('#err-seats').textContent = '';
+            return ok;
+        }
+
+        // show loading
+        function setSearching(active) {
+            searchState.loading = active;
+            searchText.style.display = active ? 'none' : 'inline';
+            searchLoader.style.display = active ? 'inline-flex' : 'none';
+            resultsLoading.style.display = active ? 'inline-flex' : 'none';
+        }
+
+        // fetch buses from server with fallback
+        function fetchBuses(pick, dest) {
+            setSearching(true);
+            resultsSub.textContent = `Searching buses from ${pick} → ${dest}...`;
+            resultsGrid.innerHTML = '';
+            searchState.buses = [];
+
+            return fetch(`/api/buses?from=${encodeURIComponent(pick)}&to=${encodeURIComponent(dest)}`)
+                .then(r => {
+                    if (!r.ok) throw new Error('no-api');
+                    return r.json();
+                })
+                .then(buses => {
+                    setSearching(false);
+                    if (!Array.isArray(buses) || buses.length === 0) {
+                        return synthesizeBuses(pick, dest);
+                    }
+                    searchState.buses = buses;
+                    return buses;
+                })
+                .catch(() => {
+                    // fallback synthesize
+                    setSearching(false);
+                    return synthesizeBuses(pick, dest);
+                });
+        }
+
+        // create up to 6 sample buses if server returns few or none
+        function synthesizeBuses(from, to) {
+            const times = ['06:00', '07:30', '09:15', '12:00', '15:00', '18:00'];
+            const out = [];
+            for (let i = 0; i < 6; i++) {
+                out.push({
+                    id: `sample-${i}`,
+                    name: `${from} ${i===0?'Express':i===1?'AC':i===2?'Shuttle':i===3?'Superfast':i===4?'Intercity':'Local'}`,
+                    route: `${from} → ${to}`,
+                    depart_time: times[i],
+                    arrival_time: computeArrival(times[i]),
+                    available_seats: 40 - (i * 2),
+                    price_per_seat: 30 + i * 5,
+                    bus_type: i % 2 === 0 ? 'AC' : 'Non-AC',
+                    live: i % 3 === 0
+                });
+            }
+            resultsSub.textContent = `Showing sample schedules for ${from} → ${to}`;
+            searchState.buses = out;
+            return out;
+        }
+
+        function computeArrival(depart) {
+            // naive +2h30
+            const parts = depart.split(':').map(Number);
+            let h = parts[0] + 2;
+            let m = parts[1] + 30;
+            if (m >= 60) {
+                h += 1;
+                m -= 60;
+            }
+            h = h % 24;
+            return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        }
+
+        // render bus cards
+        function renderBuses(buses, pick, dest) {
+            resultsGrid.innerHTML = '';
+            buses.forEach(b => {
+                const card = document.createElement('div');
+                card.className = 'bus-card';
+                const liveClass = b.live ? 'live' : 'upcoming';
+                card.innerHTML = `
+          <div class="bus-top">
+            <div class="bus-info">
+              <div class="bus-icon"><i class="fa-solid fa-bus"></i></div>
+              <div>
+                <div class="bus-meta">${escapeHtml(b.name)}</div>
+                <div class="bus-sub">${escapeHtml(pick)} → ${escapeHtml(dest)} • ${b.bus_type || 'Local'}</div>
+              </div>
+            </div>
+            <div class="bus-meta fare">₹${b.price_per_seat}</div>
+          </div>
+
+          <div class="bus-body">
+            <div>
+              <div class="tiny">Departs <strong>${b.depart_time}</strong></div>
+              <div class="tiny">Arrives <strong>${b.arrival_time || computeArrival(b.depart_time)}</strong></div>
+              <div class="tiny" style="margin-top:6px;">Seats: <strong>${b.available_seats}</strong></div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+              <div class="badge ${b.live ? 'live' : 'upcoming'}">${b.live ? 'Live' : 'On time'}</div>
+              <div class="bus-actions">
+                <button class="btn btn-ghost tiny" onclick="viewDetails('${b.id}')"><i class="fa-solid fa-info"></i> Details</button>
+                <button class="btn btn-primary" onclick="selectBus('${b.id}')"><i class="fa-solid fa-ticket"></i> Book Now</button>
+              </div>
+            </div>
+          </div>
+        `;
+                resultsGrid.appendChild(card);
+            });
+        }
+
+        // helpers
+        function escapeHtml(s) {
+            return String(s || '').replace(/[&<>"]/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;'
+            }[c]));
+        }
+
+        // when user clicks Book Now on card
+        window.selectBus = function(busId) {
+            const bus = searchState.buses.find(b => String(b.id) === String(busId));
+            if (!bus) return;
+            selectedBus = bus;
+            updateSummary();
+            // show modal for confirmation
+            modalBody.innerHTML = `
+        <div><strong>${escapeHtml(bus.name)}</strong></div>
+        <div class="muted" style="margin-top:6px">${escapeHtml(pickup.value)} → ${escapeHtml(destination.value)} • ${bus.depart_time} - ${bus.arrival_time || computeArrival(bus.depart_time)}</div>
+        <div style="margin-top:8px;">Seats: <strong>${seatsInput.value}</strong></div>
+        <div style="margin-top:8px; font-weight:800;">Total: ₹${calcTotal()}</div>
+      `;
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+        };
+
+        window.viewDetails = function(busId) {
+            const bus = searchState.buses.find(b => String(b.id) === String(busId));
+            if (!bus) return alert(`${bus.name}\nType: ${bus.bus_type || 'Local'}\nDeparture: ${bus.depart_time}\nArrival: ${bus.arrival_time || computeArrival(bus.depart_time)}\nSeats Available: ${bus.available_seats}\nFare: ₹${bus.price_per_seat}`);
+        };
+
+        // update booking summary UI
+        function updateSummary() {
+            sumName.textContent = fullName.value || mobile.value || '—';
+            sumRoute.textContent = `${pickup.value || '—'} → ${destination.value || '—'}`;
+            sumSeats.textContent = seatsInput.value || '0';
+            if (selectedBus) {
+                sumBus.textContent = selectedBus.name;
+                sumFare.textContent = '₹' + (selectedBus.price_per_seat || 0);
+                const subtotal = (selectedBus.price_per_seat || 0) * (parseInt(seatsInput.value, 10) || 0);
+                sumSub.textContent = subtotal ? '₹' + subtotal : '—';
+                const total = subtotal + BOOKING_FEE;
+                sumTotal.textContent = subtotal ? '₹' + total : '—';
+                confirmBtn.disabled = false;
+                bookingSummaryMsg.textContent = '';
+            } else {
+                sumBus.textContent = '—';
+                sumFare.textContent = '—';
+                sumSub.textContent = '—';
+                sumTotal.textContent = '—';
+                confirmBtn.disabled = true;
+            }
+        }
+
+        function calcTotal() {
+            const seats = parseInt(seatsInput.value, 10) || 0;
+            const price = selectedBus ? (selectedBus.price_per_seat || 0) : 0;
+            return (seats * price) + BOOKING_FEE;
+        }
+
+        // Modal actions
+        modalCancel.addEventListener('click', () => {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        });
+        modalConfirm.addEventListener('click', () => {
+            modalConfirm.disabled = true;
+            modalConfirm.textContent = 'Processing...';
+            // If sample bus id -> demo only
+            if (String(selectedBus.id).startsWith('sample-')) {
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.setAttribute('aria-hidden', 'true');
+                    modalConfirm.disabled = false;
+                    modalConfirm.textContent = 'Confirm & Pay';
+                    bookingSummaryMsg.textContent = 'Demo booking created (sample bus). No DB changes performed.';
+                    alert(`Demo booking successful! Total: ₹${calcTotal()}`);
+                }, 900);
+                return;
+            }
+
+            // real booking request
+            const payload = {
+                bus_id: selectedBus.id,
+                route_id: selectedBus.route_id || selectedBus.route_id,
+                passenger_name: fullName.value || 'Passenger',
+                email: email.value || '',
+                phone: mobile.value || '',
+                seats: parseInt(seatsInput.value, 10) || 1
+            };
+            fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(r => r.json()).then(res => {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+                modalConfirm.disabled = false;
+                modalConfirm.textContent = 'Confirm & Pay';
+                if (res && res.success) {
+                    bookingSummaryMsg.textContent = `Booking confirmed — ID ${res.bookingId}. Total ₹${res.totalPrice}`;
+                    alert(`Booking confirmed — ID ${res.bookingId}\nTotal ₹${res.totalPrice}`);
+                    // refresh buses to reflect seat changes
+                    $('#searchBtn').click();
+                } else {
+                    bookingSummaryMsg.textContent = 'Booking failed. ' + (res && res.error ? res.error : '');
+                    alert('Booking failed: ' + (res && res.error ? res.error : 'Unknown error'));
+                }
+            }).catch(err => {
+                console.error(err);
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+                modalConfirm.disabled = false;
+                modalConfirm.textContent = 'Confirm & Pay';
+                bookingSummaryMsg.textContent = 'Network error while booking.';
+                alert('Network error while booking. Make sure server is running at http://localhost:3000');
+            });
+        });
+
+        // form submit => search
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!validateForm()) return;
+            const pick = pickup.value,
+                dest = destination.value;
+            if (pick === dest) {
+                alert('Pickup and destination cannot be the same');
+                return;
+            }
+
+            // perform search
+            fetchBuses(pick, dest).then(buses => {
+                renderBuses(buses, pick, dest);
+                updateSummary();
+            });
+        });
+
+        // reset
+        $('#resetBtn').addEventListener('click', () => {
+            searchForm.reset();
+            selectedBus = null;
+            resultsGrid.innerHTML = '';
+            resultsSub.textContent = 'Search and choose a bus to continue';
+            updateSummary();
+        });
+
+        // when seats change update summary
+        seatsInput.addEventListener('input', updateSummary);
+        fullName.addEventListener('input', updateSummary);
+        pickup.addEventListener('change', updateSummary);
+        destination.addEventListener('change', updateSummary);
+
+        clearSelection.addEventListener('click', () => {
+            selectedBus = null;
+            updateSummary();
+            bookingSummaryMsg.textContent = '';
+        });
+
+        // Initialize
+        (function init() {
+            loadRoutesToSelects();
+            // set min date to today
+            const d = new Date();
+            d.setHours(0, 0, 0, 0);
+            const iso = d.toISOString().split('T')[0];
+            dateInput.setAttribute('min', iso);
+            dateInput.value = iso;
+            updateSummary();
+        })();
+    </script>
+
+</body>
+
+</html>

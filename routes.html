@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Routes — Vrindavan Mathura Bus Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* small local styling for the map and route list */
+        
+        .route-map {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: var(--shadow, 0 6px 18px rgba(0, 0, 0, 0.08));
+            margin-top: 1rem;
+            display: none;
+            /* hide by default - show only when route info unavailable */
+        }
+        
+        .route-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .route-name {
+            font-weight: 600;
+        }
+        
+        .route-meta {
+            color: var(--text-muted, #666);
+            font-size: 0.9rem;
+        }
+        
+        .no-routes {
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-muted, #666);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="app-container">
+        <aside class="sidebar">
+            <a href="index.html" class="nav-btn" title="Home"><i class="fa-solid fa-house"></i></a>
+            <a href="routes.html" class="nav-btn active" title="Routes"><i class="fa-solid fa-route"></i></a>
+            <a href="index.html#view-bookings" class="nav-btn" title="Tickets"><i class="fa-solid fa-ticket"></i></a>
+            <div class="spacer"></div>
+            <a href="#" class="nav-btn" title="Settings"><i class="fa-solid fa-gear"></i></a>
+        </aside>
+
+        <section class="main-content">
+            <div class="hero-bg"></div>
+            <div class="content-wrapper">
+                <header class="main-header">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-gopuram logo-icon"></i>
+                        <div>VRINDAVAN <span class="logo-sub">MATHURA BUS SERVICE</span></div>
+                    </a>
+
+                    <nav class="top-nav">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="routes.html" class="nav-link active">Routes</a>
+                        <a href="services.html" class="nav-link">Bus Services</a>
+                        <a href="about.html" class="nav-link">About Us</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </nav>
+
+                    <button class="btn-secondary" onclick="location.href='index.html'">
+                        <i class="fa-solid fa-user"></i> My Bookings
+                    </button>
+                </header>
+
+                <div style="margin-top:2rem;">
+                    <h2 class="hero-title" style="font-size:2.5rem;">Our Core Routes</h2>
+                    <p class="hero-subtitle">Discover all available routes connecting Vrindavan, Mathura, Goverdhan and sacred destinations.</p>
+
+                    <div id="routes-page-container" style="margin-top:1rem;">
+                        <div class="card">
+                            <div class="card-title">All Routes</div>
+
+                            <!-- dynamic list will be injected here -->
+                            <div id="routes-list" style="margin-top:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                                <!-- fallback static content while loading -->
+                                <div class="route-row">
+                                    <div>
+                                        <div class="route-name">Loading routes...</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Map image: save the provided map screenshot to assets/routes-map.png -->
+                            <!-- Hidden by default; displayed when route info is unavailable -->
+                            <img id="routes-map" src="assets/routes-map.png" alt="Routes map Vrindavan-Mathura-Goverdhan" class="route-map">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <div class="notifications-container" id="notifications-box"></div>
+    </main>
+
+    <script>
+        // Try API first (/api/routes). If fails, fallback to local routes-data.json
+        (function loadRoutes() {
+            function render(routes) {
+                const container = document.getElementById('routes-list');
+                container.innerHTML = '';
+                // hide map if routes render successfully
+                const mapEl = document.getElementById('routes-map');
+                if (mapEl) mapEl.style.display = 'none';
+
+                routes.forEach(r => {
+                    const div = document.createElement('div');
+                    div.className = 'route-row';
+                    div.innerHTML = `
+                    <div>
+                        <div class="route-name">${r.from} <i class="fa-solid fa-right-long"></i> ${r.to}</div>
+                        <div class="route-meta">${r.frequency || ''} • ${r.price ? 'From ₹' + r.price : ''}</div>
+                    </div>
+                    <div>
+                        <button class="btn-primary" onclick="location.href='index.html?from=${encodeURIComponent(r.from)}&to=${encodeURIComponent(r.to)}'">Search Buses</button>
+                    </div>
+                `;
+                    container.appendChild(div);
+                });
+            }
+
+            function showMapWithMessage() {
+                const container = document.getElementById('routes-list');
+                container.innerHTML = `<div class="no-routes">Route information is currently unavailable</div>`;
+                const mapEl = document.getElementById('routes-map');
+                if (mapEl) mapEl.style.display = 'block';
+            }
+
+            fetch('/api/routes').then(r => {
+                if (!r.ok) throw new Error('no api');
+                return r.json();
+            }).then(data => {
+                if (!data || !Array.isArray(data) || data.length === 0) {
+                    // no data -> show message + map
+                    showMapWithMessage();
+                } else {
+                    render(data);
+                }
+            }).catch(() => {
+                // fallback
+                fetch('routes-data.json').then(r => r.json()).then(data => {
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        showMapWithMessage();
+                    } else {
+                        render(data);
+                    }
+                }).catch(err => {
+                    console.error(err);
+                    showMapWithMessage();
+                });
+            });
+        })();
+    </script>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

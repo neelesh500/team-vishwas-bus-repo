@@ -184,3 +184,30 @@ This document outlines the REST API architecture for the **Vrindavan Bus Navigat
   "ticket_qr_code": "QR_DATA_BASE64..."
 }
 ```
+
+---
+
+## 4. Route Management Endpoints
+
+### List All Routes
+* **Endpoint:** `GET /api/routes`
+* **Description:** Retrieves a list of all bus routes.
+* **Response (200 OK):**
+```json
+[
+  {
+    "id": 1,
+    "from": "Prem Mandir",
+    "to": "Banke Bihari Mandir",
+    "price": 20.00,
+    "frequency": "15 mins"
+  },
+  {
+    "id": 2,
+    "from": "Iskcon Temple",
+    "to": "Radha Raman Mandir",
+    "price": 25.00,
+    "frequency": "30 mins"
+  }
+]
+```

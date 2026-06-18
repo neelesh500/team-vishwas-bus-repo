@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>About Us — Vrindavan Mathura Bus Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="app-container">
+        <aside class="sidebar">
+            <a href="index.html" class="nav-btn" title="Home"><i class="fa-solid fa-house"></i></a>
+            <a href="routes.html" class="nav-btn" title="Routes"><i class="fa-solid fa-route"></i></a>
+            <a href="index.html#view-bookings" class="nav-btn" title="Tickets"><i class="fa-solid fa-ticket"></i></a>
+            <div class="spacer"></div>
+            <a href="#" class="nav-btn" title="Settings"><i class="fa-solid fa-gear"></i></a>
+        </aside>
+
+        <section class="main-content">
+            <div class="hero-bg"></div>
+            <div class="content-wrapper">
+                <header class="main-header">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-gopuram logo-icon"></i>
+                        <div>VRINDAVAN <span class="logo-sub">MATHURA BUS SERVICE</span></div>
+                    </a>
+
+                    <nav class="top-nav">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="routes.html" class="nav-link">Routes</a>
+                        <a href="services.html" class="nav-link">Bus Services</a>
+                        <a href="about.html" class="nav-link active">About Us</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </nav>
+
+                    <button class="btn-secondary" onclick="location.href='index.html'">
+                        <i class="fa-solid fa-user"></i> My Bookings
+                    </button>
+                </header>
+
+                <div style="margin-top:2rem;">
+                    <h2 class="hero-title" style="font-size:2.5rem;">About Us</h2>
+                    <p class="hero-subtitle">Serving pilgrims with devotion, comfort, and care since day one.</p>
+
+                    <div class="card" style="display:flex; gap:2rem; align-items:center; max-width:900px; margin-top:1.5rem;">
+                        <div style="flex:1;">
+                            <img src="radha-krishna.png" alt="Radha Krishna" style="width:100%; border-radius:var(--radius-md); box-shadow:var(--shadow);">
+                        </div>
+                        <div style="flex:1;">
+                            <h3 style="margin-bottom:1rem; color:var(--primary); font-size:1.8rem;">Travel Local, Travel Divine</h3>
+                            <p style="line-height:1.6; color:var(--text-muted); font-size:1.1rem; margin-bottom:1rem;">Vrindavan Mathura Bus Service was founded with a single mission: to provide comfortable, safe, and affordable transportation for the millions of pilgrims who visit the holy lands of Braj each year.</p>
+                            <p style="line-height:1.6; color:var(--text-muted); font-size:1.1rem;">Our fleet connects all major temples and junctions, ensuring your spiritual journey is hassle-free. Guided by devotion and service, we strive to make every journey as beautiful as the destination.</p>
+                        </div>
+                    </div>
+
+                    <div class="bottom-grid" style="margin-top:1.5rem;">
+                        <div class="card">
+                            <div class="card-title">Our Mission</div>
+                            <div class="reasons-list">
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-hands-praying"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Devotion First</h4>
+                                        <p>Every journey is designed to support your spiritual experience</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Safe Travel</h4>
+                                        <p>Well-maintained buses with trained, courteous drivers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">What We Offer</div>
+                            <div class="reasons-list">
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-route"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Temple Routes</h4>
+                                        <p>Direct connections to ISKCON, Prem Mandir, Banke Bihari & more</p>
+                                    </div>
+                                </div>
+                                <div class="reason-item">
+                                    <div class="reason-icon"><i class="fa-solid fa-ticket"></i></div>
+                                    <div class="reason-text">
+                                        <h4>Easy Booking</h4>
+                                        <p>Book tickets online and get instant QR confirmation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Get Started</div>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Plan your next pilgrimage with us today.</p>
+                            <button class="btn-primary" onclick="location.href='index.html'">Book a Ticket <i class="fa-solid fa-ticket"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="notifications-container" id="notifications-box"></div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
